@@ -1,12 +1,13 @@
 // constants
 const defaultSquares = 16
 const defaultColour = 'black'
+let divContainer
 
 // add a function to create the number of divs
 function addDivs(num) {
 
   //constants
-  const divContainer = document.querySelector('#divContainer')
+  divContainer = document.querySelector('#divContainer')
 
   // for loop to make 256 divs
   for (i = 0; i < num * num; i++) {
@@ -35,7 +36,43 @@ function addColor(color) {
   }
 }
 
+// function to get the user slider input and change the squares accordingly
+function adjustSquares() {
+
+  // constants
+  const slider = document.querySelector('.slider')
+  const sliderOutput = document.querySelectorAll('.numberOfSquares')
+
+  // change sliderOutput to slider value
+  slider.addEventListener('input', () => {
+    for (i = 0; i < sliderOutput.length; i++) {
+      sliderOutput[i].innerText = slider.value
+    }
+  })
+
+  // if value changes run clear and add new divs
+  slider.addEventListener('change', () => {
+
+    // clear divs
+    divContainer.innerHTML = '';
+
+    // add divs and adjust size of square
+    addDivs(slider.value)
+
+    const square = document.querySelectorAll('.square')
+    const widthAndHeight = 600 / parseInt(slider.value)
+
+    for (i = 0; i < square.length; i++) {
+      square[i].style.width = `${widthAndHeight}px`
+      square[i].style.height = `${widthAndHeight}px`
+    }
+
+    addColor(defaultColour)
+  })
+}
+
 window.onload = () => {
   addDivs(defaultSquares)
   addColor(defaultColour)
+  adjustSquares()
 }
