@@ -21,6 +21,7 @@ function addDivs(num) {
   }
 }
 
+// add color to the background if clicked
 function addColor(color) {
 
   // get the class of squares
@@ -62,12 +63,46 @@ function adjustSquares() {
     const square = document.querySelectorAll('.square')
     const widthAndHeight = 600 / parseInt(slider.value)
 
+    // because square is a nodeList, so we have to go to each node to adjust the css
     for (i = 0; i < square.length; i++) {
       square[i].style.width = `${widthAndHeight}px`
       square[i].style.height = `${widthAndHeight}px`
     }
 
     addColor(defaultColour)
+
+    rainbowColorChanger()
+  })
+}
+
+// function to adjust the color when clicking on colorPicker
+function changeColor() {
+  const colorPicker = document.querySelector('#colorPicker')
+  colorPicker.addEventListener('change', (event) => {
+    addColor(event.target.value)
+  }, false)
+}
+
+// function to change the color automatically
+
+function rainbowColorChanger() {
+  const rainbow = document.querySelector('#rainbowColorChanger')
+  const getSquare = document.querySelectorAll('.square')
+
+  rainbow.addEventListener('click', () => {
+    // add background color to squares
+    for (i = 0; i < getSquare.length; i++) {
+      getSquare[i].addEventListener('mousemove', (event) => {
+        let r = Math.round(Math.random() * 255)
+        let g = Math.round(Math.random() * 255)
+        let b = Math.round(Math.random() * 255)
+        let a = Math.round(Math.random() * 10) / 10
+
+        if (event.buttons === 1) { // Check if the left mouse button is pressed
+          event.target.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${a})`
+        }
+      })
+    }
   })
 }
 
@@ -75,4 +110,6 @@ window.onload = () => {
   addDivs(defaultSquares)
   addColor(defaultColour)
   adjustSquares()
+  changeColor()
+  rainbowColorChanger()
 }
