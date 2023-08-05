@@ -7,6 +7,9 @@
       content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
   >
   <script src="index.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Etch-a-sketch</title>
@@ -14,18 +17,31 @@
 <body>
   <main>
     <h1>Etch-a-Sketch</h1>
-    <div class="sliderDiv">
-      <input type="range" min="8" max="36" value="16" class="slider">
-      <p>
-        <span class="numberOfSquares">16</span> X <span class="numberOfSquares">16</span>
-      </p>
-    </div>
-    <div class="colorPickerContainer">
-      <input type="color" id="colorPicker" value="#000000">
-    </div>
-    <button id="rainbowColorChanger">Rainbow</button>
-    <div id="divContainer">
-<!--      This is where the divs will be added-->
+    <div id="buttonAndCanvas">
+      <div id="buttonsContainer">
+        <div id="colorPickerContainer" class="buttons">
+          <input type="color" id="colorPicker" value="#000000">
+        </div>
+        <button id="rainbowColorChanger" class="buttons">Rainbow</button>
+        <button id="eraser" class="buttons">
+          Eraser
+        </button>
+        <button id="reset" class="buttons">
+          Reset
+        </button>
+        <div class="sliderDiv">
+          <h2>
+            Edit the size of the canvas!
+          </h2>
+          <input type="range" min="8" max="64" value="16" class="slider">
+          <p>
+            <span class="numberOfSquares">16</span> X <span class="numberOfSquares">16</span>
+          </p>
+        </div>
+      </div>
+      <div id="divContainer">
+        <!--      This is where the divs will be added-->
+      </div>
     </div>
   </main>
 </body>

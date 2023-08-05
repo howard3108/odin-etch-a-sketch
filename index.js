@@ -29,7 +29,7 @@ function addColor(color) {
 
   // add background color to squares
   for (i = 0; i < getSquare.length; i++) {
-    getSquare[i].addEventListener('mousemove', (event) => {
+    getSquare[i].addEventListener('mousemove' , (event) => {
       if (event.buttons === 1) { // Check if the left mouse button is pressed
         event.target.style.backgroundColor = color;
       }
@@ -72,14 +72,20 @@ function adjustSquares() {
     addColor(defaultColour)
 
     rainbowColorChanger()
+    resetMode()
   })
 }
 
 // function to adjust the color when clicking on colorPicker
 function changeColor() {
+  const rainbow = document.querySelector('#rainbowColorChanger')
   const colorPicker = document.querySelector('#colorPicker')
+
   colorPicker.addEventListener('change', (event) => {
     addColor(event.target.value)
+    rainbow.style.backgroundColor = 'white'
+    rainbow.style.color = 'black'
+    rainbow.style.transitionDuration = '0.5s'
   }, false)
 }
 
@@ -87,22 +93,86 @@ function changeColor() {
 
 function rainbowColorChanger() {
   const rainbow = document.querySelector('#rainbowColorChanger')
-  const getSquare = document.querySelectorAll('.square')
 
   rainbow.addEventListener('click', () => {
-    // add background color to squares
-    for (i = 0; i < getSquare.length; i++) {
-      getSquare[i].addEventListener('mousemove', (event) => {
-        let r = Math.round(Math.random() * 255)
-        let g = Math.round(Math.random() * 255)
-        let b = Math.round(Math.random() * 255)
-        let a = Math.round(Math.random() * 10) / 10
+    randomColor ()
+    rainbow.style.backgroundColor = 'black'
+    rainbow.style.color = 'white'
 
-        if (event.buttons === 1) { // Check if the left mouse button is pressed
-          event.target.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${a})`
-        }
-      })
+    eraser.style.backgroundColor = 'white'
+    eraser.style.color = 'black'
+    eraser.style.transitionDuration = '0.5s'
+  })
+}
+
+function randomColor () {
+  const getSquare = document.querySelectorAll('.square')
+
+  // add background color to squares
+  for (i = 0; i < getSquare.length; i++) {
+    getSquare[i].addEventListener('mousemove', (event) => {
+      let r = Math.round(Math.random() * 255)
+      let g = Math.round(Math.random() * 255)
+      let b = Math.round(Math.random() * 255)
+
+      if (event.buttons === 1) { // Check if the left mouse button is pressed
+        event.target.style.backgroundColor = `rgba(${r}, ${g}, ${b})`
+      }
+    })
+  }
+}
+
+function eraseMode() {
+  const eraser = document.querySelector('#eraser')
+  const rainbow = document.querySelector('#rainbowColorChanger')
+
+
+  // add event listener of when clicked
+  eraser.addEventListener('click', () => {
+    eraseDrawing()
+    eraser.style.backgroundColor = 'black'
+    eraser.style.color = 'white'
+    eraser.style.transitionDuration = '0.5s'
+
+    rainbow.style.backgroundColor = 'white'
+    rainbow.style.color = 'black'
+    rainbow.style.transitionDuration = '0.5s'
+  })
+}
+
+function eraseDrawing() {
+  const square = document.querySelectorAll('.square')
+
+  for (i = 0; i < square.length; i++) {
+    square[i].addEventListener('mousemove', (event) => {
+
+      if (event.buttons === 1) { // Check if the left mouse button is pressed
+        event.target.style.backgroundColor = `white`
+      }
+    })
+  }
+}
+
+function resetMode() {
+  const reset = document.querySelector('#reset')
+  const square = document.querySelectorAll('.square')
+  const rainbow = document.querySelector('#rainbowColorChanger')
+  const eraser = document.querySelector('#eraser')
+
+  reset.addEventListener('click', () => {
+    for (i = 0; i < square.length; i++) {
+      square[i].style.backgroundColor = 'white'
     }
+
+    rainbow.style.backgroundColor = 'white'
+    rainbow.style.color = 'black'
+    rainbow.style.transitionDuration = '0.5s'
+
+    eraser.style.backgroundColor = 'white'
+    eraser.style.color = 'black'
+    eraser.style.transitionDuration = '0.5s'
+
+    addColor(defaultColour)
   })
 }
 
@@ -112,4 +182,6 @@ window.onload = () => {
   adjustSquares()
   changeColor()
   rainbowColorChanger()
+  eraseMode()
+  resetMode()
 }
